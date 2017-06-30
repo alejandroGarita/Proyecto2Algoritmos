@@ -12,22 +12,24 @@ package proyecto2algoritmos;
 public class ArbolAVL {
 
     private NodoAVL raiz;
+    private int siguientePocision;
     
     public ArbolAVL(){
         raiz=null;
+        siguientePocision=-1;
     }
     
-    public boolean insertarNodo(String palabra, int pocision){
+    public boolean insertarNodo(String palabra){
         
         NodoAVL nuevoNodo=new NodoAVL();
         nuevoNodo.setPalabra(palabra);
-        nuevoNodo.agregarRepeticion(pocision);
+        nuevoNodo.agregarRepeticion(siguientePocision);
         nuevoNodo.setHijoDerecho(null);
         nuevoNodo.setHijoIzquierdo(null);
         
         NodoAVL temp=raiz;
         
-        if(repetido(palabra,pocision)!=true){
+        if(repetido(palabra, siguientePocision)!=true){
         
             if(raiz==null){
                 nuevoNodo.setPadre(null);
@@ -76,7 +78,6 @@ public class ArbolAVL {
         while(temp!=null){
             if(temp.getPalabra().equals(palabra)){
                 temp.agregarRepeticion(pocision);
-                System.out.println("Repetida "+palabra);
                 return true;
             }else if(palabra.compareTo(temp.getPalabra())<0){
                     temp=temp.getHijoIzquierdo();
@@ -113,7 +114,7 @@ public class ArbolAVL {
                 rotacionDerecha(nodo);
             }else rotacionDerecha(nodo);
         }else if(nodo.getEquilibrio()<-1){
-                if(nodo.getHijoDerecho().getEquilibrio()>=0){
+                if(nodo.getHijoDerecho().getEquilibrio()>0){
                     rotacionDerecha(nodo.getHijoDerecho());
                     rotacionIzquierda(nodo);
                 }else rotacionIzquierda(nodo);
@@ -187,10 +188,41 @@ public class ArbolAVL {
         }
     }
     
-    
+    public String buscarNodo(String palabra){
+        char[] vector=palabra.toCharArray();
+        NodoAVL temp=raiz;
+        
+        while(temp!=null){
+            char[] vectorNodo=temp.getPalabra().toCharArray();
+            int menor;
+            String res="";
+            if(vector.length<vectorNodo.length)
+                menor=vector.length;
+            else menor=vectorNodo.length;
+            for(int i=0; i<menor; i++){
+                if(vector[i]!=vectorNodo[i])
+                    break;
+                else res+=vectorNodo[i];
+            }
+            if(res.equals(palabra)){
+                return temp.getPalabra();
+            }else if(palabra.compareTo(temp.getPalabra())<0){
+                    temp=temp.getHijoIzquierdo();
+            }else temp=temp.getHijoDerecho();
+        }
+        return "No se encontro la palabra";
+    }
 
     public NodoAVL getRaiz() {
         return raiz;
+    }
+
+    public int getSiguientePocision() {
+        return siguientePocision;
+    }
+
+    public void setSiguientePocision(int siguientePocision) {
+        this.siguientePocision = siguientePocision;
     }
     
     
