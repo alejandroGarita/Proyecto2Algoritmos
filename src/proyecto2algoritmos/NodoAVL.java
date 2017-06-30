@@ -5,6 +5,9 @@
  */
 package proyecto2algoritmos;
 
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics2D;
 /**
  *
  * @author Alejandro
@@ -22,6 +25,10 @@ public class NodoAVL {
 
     private int[] repeticiones;
     
+    private int x;
+    
+    private int y;
+    
     public NodoAVL() {
         palabra="";
         hijoDerecho=null;
@@ -29,6 +36,8 @@ public class NodoAVL {
         padre=null;
         equilibrio=0;
         repeticiones=new int[0];
+        x=0; 
+        y=0;
     }
     
     public void agregarRepeticion(int pocision){
@@ -84,5 +93,35 @@ public class NodoAVL {
         this.padre = padre;
     }
 
+    public void draw(Graphics2D g2, int x, int y){
+        this.x=x;
+        this.y=y;
+        
+        if(hijoIzquierdo!=null)
+            g2.drawLine(x, y, hijoIzquierdo.getX(), hijoIzquierdo.getY());
+        if(hijoDerecho!=null)
+            g2.drawLine(x, y, hijoDerecho.getX(), hijoDerecho.getY());
+//        g2.setColor(Color.white);
+//        g2.drawRect(x-20, y-30, 50, 50);
+        g2.setColor(Color.black);
+        g2.setFont(new Font("Monospace", Font.BOLD, 18));
+        g2.drawString(this.palabra, this.x, this.y);
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
     
 }// NodoAVL
